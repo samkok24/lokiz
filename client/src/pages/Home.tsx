@@ -1,22 +1,20 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE } from "@/const";
 
 /**
  * All content in this page are only for example, delete if unneeded
  * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
  */
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
-  // Use APP_LOGO (as image src) and APP_TITLE if needed
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        Example Page
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen">
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-4">For You</h1>
+        <p className="text-muted-foreground mb-4">피드가 여기에 표시됩니다.</p>
+        <Link href="/profile/1">
+          <Button variant="default">프로필 페이지 보기</Button>
+        </Link>
+      </div>
     </div>
   );
 }
