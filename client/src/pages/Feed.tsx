@@ -3,6 +3,7 @@ import VideoPlayer from "@/components/VideoPlayer";
 import GlitchModal from "@/components/GlitchModal";
 import HashtagModal from "@/components/HashtagModal";
 import CommentPanel from "@/components/CommentPanel";
+import ShareModal from "@/components/ShareModal";
 
 // Mock data
 const mockVideos = [
@@ -67,6 +68,7 @@ export default function Feed() {
   const [glitchModal, setGlitchModal] = useState<{ isOpen: boolean; videoId: string; user: string }>({ isOpen: false, videoId: "", user: "" });
   const [hashtagModal, setHashtagModal] = useState<{ isOpen: boolean; hashtag: string }>({ isOpen: false, hashtag: "" });
   const [commentPanel, setCommentPanel] = useState<{ isOpen: boolean; videoId: string }>({ isOpen: false, videoId: "" });
+  const [shareModal, setShareModal] = useState<{ isOpen: boolean; videoId: string }>({ isOpen: false, videoId: "" });
 
   // Handle scroll
   useEffect(() => {
@@ -122,8 +124,7 @@ export default function Feed() {
   };
 
   const handleShare = (videoId: string) => {
-    console.log("Share video:", videoId);
-    // TODO: Open share modal
+    setShareModal({ isOpen: true, videoId });
   };
 
   return (
@@ -170,6 +171,11 @@ export default function Feed() {
         onClose={() => setCommentPanel({ isOpen: false, videoId: "" })}
         videoId={commentPanel.videoId}
         commentCount={videos.find(v => v.id === commentPanel.videoId)?.comment_count || 0}
+      />
+      <ShareModal
+        isOpen={shareModal.isOpen}
+        onClose={() => setShareModal({ isOpen: false, videoId: "" })}
+        videoId={shareModal.videoId}
       />
     </div>
   );
