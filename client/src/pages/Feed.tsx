@@ -130,7 +130,8 @@ export default function Feed() {
     <div className="flex items-center justify-center h-screen bg-black">
       <div
         ref={containerRef}
-        className="relative w-full max-w-[600px] h-screen overflow-y-scroll snap-y snap-mandatory"
+        className="relative h-screen overflow-y-scroll snap-y snap-mandatory"
+        style={{ width: '56.25%', minWidth: '320px', maxWidth: '600px' }}
       >
         <style>{`
           div::-webkit-scrollbar {
