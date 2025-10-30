@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, Compass, Users, Radio, MessageCircle, PlusSquare, User } from "lucide-react";
+import { Home, Compass, Users, MessageCircle, PlusSquare, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/lib/store/authStore";
 
@@ -11,7 +11,6 @@ export default function Sidebar() {
     { icon: Home, label: "주전", path: "/" },
     { icon: Compass, label: "탐색", path: "/explore" },
     { icon: Users, label: "팔로잉", path: "/following" },
-    { icon: Radio, label: "라이브", path: "/live" },
     { icon: MessageCircle, label: "메시지", path: "/messages" },
   ];
 
@@ -19,10 +18,8 @@ export default function Sidebar() {
     <aside className="fixed left-0 top-0 h-screen w-64 bg-black border-r border-border flex flex-col">
       {/* Logo */}
       <div className="p-6">
-        <Link href="/">
-          <a className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-primary">LOKIZ</span>
-          </a>
+        <Link href="/" className="flex items-center space-x-2">
+          <span className="text-2xl font-bold text-primary">LOKIZ</span>
         </Link>
       </div>
 
@@ -33,41 +30,43 @@ export default function Sidebar() {
           const isActive = location === item.path;
           
           return (
-            <Link key={item.path} href={item.path}>
-              <a
-                className={`
-                  flex items-center space-x-4 px-4 py-3 rounded-lg mb-1
-                  transition-colors duration-200
-                  ${isActive 
-                    ? "bg-muted text-primary font-semibold" 
-                    : "text-foreground hover:bg-muted/50"
-                  }
-                `}
-              >
-                <Icon className="w-6 h-6" />
-                <span className="text-base">{item.label}</span>
-              </a>
+            <Link 
+              key={item.path} 
+              href={item.path}
+              className={`
+                flex items-center space-x-4 px-4 py-3 rounded-lg mb-1
+                transition-colors duration-200
+                ${isActive 
+                  ? "bg-muted text-primary font-semibold" 
+                  : "text-foreground hover:bg-muted/50"
+                }
+              `}
+            >
+              <Icon className="w-6 h-6" />
+              <span className="text-base">{item.label}</span>
             </Link>
           );
         })}
 
         {/* Upload Button */}
         {isAuthenticated && (
-          <Link href="/upload">
-            <a className="flex items-center space-x-4 px-4 py-3 rounded-lg mb-1 text-foreground hover:bg-muted/50 transition-colors">
-              <PlusSquare className="w-6 h-6" />
-              <span className="text-base">업로드</span>
-            </a>
+          <Link 
+            href="/upload"
+            className="flex items-center space-x-4 px-4 py-3 rounded-lg mb-1 text-foreground hover:bg-muted/50 transition-colors"
+          >
+            <PlusSquare className="w-6 h-6" />
+            <span className="text-base">업로드</span>
           </Link>
         )}
 
         {/* Profile */}
         {isAuthenticated && user && (
-          <Link href={`/profile/${user.id}`}>
-            <a className="flex items-center space-x-4 px-4 py-3 rounded-lg mb-1 text-foreground hover:bg-muted/50 transition-colors">
-              <User className="w-6 h-6" />
-              <span className="text-base">프로필</span>
-            </a>
+          <Link 
+            href={`/profile/${user.id}`}
+            className="flex items-center space-x-4 px-4 py-3 rounded-lg mb-1 text-foreground hover:bg-muted/50 transition-colors"
+          >
+            <User className="w-6 h-6" />
+            <span className="text-base">프로필</span>
           </Link>
         )}
       </nav>

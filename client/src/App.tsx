@@ -5,7 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import MainLayout from "./components/MainLayout";
-import Home from "./pages/Home";
+import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
@@ -20,7 +20,7 @@ function Router() {
       {/* Main pages with layout */}
       <Route path="/">
         <MainLayout>
-          <Home />
+          <Feed />
         </MainLayout>
       </Route>
       
