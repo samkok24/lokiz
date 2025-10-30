@@ -43,10 +43,10 @@
 }
 
 :root {
-  /* TikTok Brand Colors */
-  --primary: #FE2C55;  /* TikTok Red */
-  --primary-foreground: #FFFFFF;
-  --secondary: #25F4EE;  /* TikTok Cyan */
+  /* LOKIZ Brand Colors */
+  --primary: #C9F227;  /* Neon Lime */
+  --primary-foreground: #000000;
+  --secondary: #C9F227;  /* Neon Lime */
   --secondary-foreground: #000000;
   
   /* Radius */
@@ -61,30 +61,30 @@
   --popover-foreground: #FFFFFF;
   --muted: #2F2F2F;
   --muted-foreground: #A0A0A0;
-  --accent: #25F4EE;
+  --accent: #C9F227;
   --accent-foreground: #000000;
   --destructive: #FF3B30;
   --destructive-foreground: #FFFFFF;
   --border: #2F2F2F;
   --input: #1F1F1F;
-  --ring: #FE2C55;
+  --ring: #C9F227;
   
   /* Sidebar */
   --sidebar: #000000;
   --sidebar-foreground: #FFFFFF;
-  --sidebar-primary: #FE2C55;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-primary: #C9F227;
+  --sidebar-primary-foreground: #000000;
   --sidebar-accent: #1F1F1F;
   --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: #2F2F2F;
-  --sidebar-ring: #FE2C55;
+  --sidebar-ring: #C9F227;
   
   /* Charts */
-  --chart-1: #FE2C55;
-  --chart-2: #25F4EE;
-  --chart-3: #00D95F;
-  --chart-4: #FFD60A;
-  --chart-5: #FF3B30;
+  --chart-1: #C9F227;
+  --chart-2: #00D95F;
+  --chart-3: #FFD60A;
+  --chart-4: #FF3B30;
+  --chart-5: #C9F227;
 }
 
 .dark {
