@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Share2, MoreHorizontal, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import VideoDetailModal from "@/components/VideoDetailModal";
 
 // Mock data
 const mockUser = {
@@ -24,6 +25,7 @@ const mockVideos = Array.from({ length: 12 }, (_, i) => ({
 export default function Profile() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState("videos");
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) {
@@ -120,7 +122,7 @@ export default function Profile() {
           </TabsList>
 
           <TabsContent value="videos" className="mt-0">
-            <VideoGrid videos={mockVideos} />
+            <VideoGrid videos={mockVideos} onVideoClick={(videoId) => setSelectedVideo(videoId)} />
           </TabsContent>
 
           <TabsContent value="reposts" className="mt-0">
@@ -136,6 +138,28 @@ export default function Profile() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Video Detail Modal */}
+      {selectedVideo && (
+        <VideoDetailModal
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          video={{
+            id: selectedVideo,
+            url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            user: {
+              id: mockUser.id,
+              username: mockUser.username,
+              profile_image: mockUser.profileImage,
+            },
+            caption: "Amazing video! #lokiz #glitch #ai",
+            view_count: 123000,
+            like_count: 2661,
+            comment_count: 20,
+            is_liked: false,
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -146,9 +170,10 @@ interface VideoGridProps {
     thumbnail: string;
     views: number;
   }>;
+  onVideoClick: (videoId: string) => void;
 }
 
-function VideoGrid({ videos }: VideoGridProps) {
+function VideoGrid({ videos, onVideoClick }: VideoGridProps) {
   const formatViews = (views: number) => {
     if (views >= 1000000) {
       return `${(views / 1000000).toFixed(1)}M`;
@@ -164,6 +189,7 @@ function VideoGrid({ videos }: VideoGridProps) {
       {videos.map((video) => (
         <div
           key={video.id}
+          onClick={() => onVideoClick(video.id)}
           className="relative aspect-[3/4] bg-muted rounded overflow-hidden cursor-pointer group"
         >
           <img

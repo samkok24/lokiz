@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Heart, MessageCircle, Zap, Share2, Play, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 
 interface VideoPlayerProps {
   video: {
@@ -38,6 +39,7 @@ export default function VideoPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [, setLocation] = useLocation();
 
   // Auto play/pause based on isActive
   useEffect(() => {
@@ -133,6 +135,7 @@ export default function VideoPlayer({
           <img
             src={video.user.profile_image || "https://via.placeholder.com/48"}
             alt={video.user.username}
+            onClick={() => setLocation(`/profile/${video.user.id}`)}
             className="w-12 h-12 rounded-full border-2 border-white cursor-pointer"
           />
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary flex items-center justify-center cursor-pointer">
@@ -182,7 +185,12 @@ export default function VideoPlayer({
       {/* Bottom Info */}
       <div className="absolute left-4 bottom-24 right-24 text-white">
         <div className="mb-2">
-          <span className="font-semibold">@{video.user.username}</span>
+          <span
+            onClick={() => setLocation(`/profile/${video.user.id}`)}
+            className="font-semibold cursor-pointer hover:underline"
+          >
+            @{video.user.username}
+          </span>
         </div>
         <p className="text-sm mb-2 line-clamp-2">{video.caption}</p>
         <div className="flex items-center gap-2 text-xs text-white/80">
