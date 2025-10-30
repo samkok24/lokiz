@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import VideoPlayer from "@/components/VideoPlayer";
 import GlitchModal from "@/components/GlitchModal";
 import HashtagModal from "@/components/HashtagModal";
+import CommentPanel from "@/components/CommentPanel";
 
 // Mock data
 const mockVideos = [
@@ -65,6 +66,7 @@ export default function Feed() {
   const [isScrolling, setIsScrolling] = useState(false);
   const [glitchModal, setGlitchModal] = useState<{ isOpen: boolean; videoId: string; user: string }>({ isOpen: false, videoId: "", user: "" });
   const [hashtagModal, setHashtagModal] = useState<{ isOpen: boolean; hashtag: string }>({ isOpen: false, hashtag: "" });
+  const [commentPanel, setCommentPanel] = useState<{ isOpen: boolean; videoId: string }>({ isOpen: false, videoId: "" });
 
   // Handle scroll
   useEffect(() => {
@@ -109,8 +111,7 @@ export default function Feed() {
   };
 
   const handleComment = (videoId: string) => {
-    console.log("Comment on video:", videoId);
-    // TODO: Open comment modal
+    setCommentPanel({ isOpen: true, videoId });
   };
 
   const handleGlitch = (videoId: string) => {
@@ -129,7 +130,7 @@ export default function Feed() {
     <div className="flex items-center justify-center h-screen bg-black">
       <div
         ref={containerRef}
-        className="relative w-full max-w-[500px] h-screen overflow-y-scroll snap-y snap-mandatory"
+        className="relative w-full max-w-[600px] h-screen overflow-y-scroll snap-y snap-mandatory"
       >
         <style>{`
           div::-webkit-scrollbar {
@@ -162,6 +163,12 @@ export default function Feed() {
         isOpen={hashtagModal.isOpen}
         onClose={() => setHashtagModal({ isOpen: false, hashtag: "" })}
         hashtag={hashtagModal.hashtag}
+      />
+      <CommentPanel
+        isOpen={commentPanel.isOpen}
+        onClose={() => setCommentPanel({ isOpen: false, videoId: "" })}
+        videoId={commentPanel.videoId}
+        commentCount={videos.find(v => v.id === commentPanel.videoId)?.comment_count || 0}
       />
     </div>
   );
