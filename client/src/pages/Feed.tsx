@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import VideoPlayer from "@/components/VideoPlayer";
+import GlitchModal from "@/components/GlitchModal";
+import HashtagModal from "@/components/HashtagModal";
 
 // Mock data
 const mockVideos = [
@@ -58,6 +60,8 @@ export default function Feed() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [glitchModal, setGlitchModal] = useState<{ isOpen: boolean; videoId: string; user: string }>({ isOpen: false, videoId: "", user: "" });
+  const [hashtagModal, setHashtagModal] = useState<{ isOpen: boolean; hashtag: string }>({ isOpen: false, hashtag: "" });
 
   // Handle scroll
   useEffect(() => {
@@ -106,8 +110,10 @@ export default function Feed() {
   };
 
   const handleGlitch = (videoId: string) => {
-    console.log("Glitch video:", videoId);
-    // TODO: Open glitch modal
+    const video = videos.find(v => v.id === videoId);
+    if (video) {
+      setGlitchModal({ isOpen: true, videoId, user: video.user.username });
+    }
   };
 
   const handleShare = (videoId: string) => {
@@ -139,7 +145,19 @@ export default function Feed() {
           />
         </div>
       ))}
+
+      {/* Modals */}
+      <GlitchModal
+        isOpen={glitchModal.isOpen}
+        onClose={() => setGlitchModal({ isOpen: false, videoId: "", user: "" })}
+        videoId={glitchModal.videoId}
+        originalUser={glitchModal.user}
+      />
+      <HashtagModal
+        isOpen={hashtagModal.isOpen}
+        onClose={() => setHashtagModal({ isOpen: false, hashtag: "" })}
+        hashtag={hashtagModal.hashtag}
+      />
     </div>
   );
 }
-
