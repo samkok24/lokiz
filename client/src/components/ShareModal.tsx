@@ -95,32 +95,33 @@ export default function ShareModal({ isOpen, onClose, videoId }: ShareModalProps
           {/* Following users - always visible */}
           <div className="flex gap-3 overflow-x-auto pb-2 bg-[#2a2a2a] rounded-lg p-3">
             {mockFollowingUsers.map((user) => (
-              <button
+              <div
                 key={user.id}
-                onClick={() => handleUserClick(user.id)}
                 className="flex flex-col items-center gap-2 min-w-[70px] relative"
-                disabled={user.isMe}
               >
                 <div className="relative">
-                  <img
-                    src={user.profile_image}
-                    alt={user.username}
-                    className={`w-14 h-14 rounded-full ${
-                      user.isMe ? "opacity-100" : "opacity-90 hover:opacity-100"
-                    }`}
-                    style={{
-                      background: user.isMe
-                        ? "linear-gradient(135deg, #C9F227 0%, #00F2EA 100%)"
-                        : "transparent",
-                    }}
-                  />
+                  <button
+                    onClick={() => handleUserClick(user.id)}
+                    disabled={user.isMe}
+                    className="block"
+                  >
+                    <img
+                      src={user.profile_image}
+                      alt={user.username}
+                      className={`w-14 h-14 rounded-full ${
+                        user.isMe ? "opacity-100" : "opacity-90 hover:opacity-100"
+                      }`}
+                      style={{
+                        background: user.isMe
+                          ? "linear-gradient(135deg, #C9F227 0%, #00F2EA 100%)"
+                          : "transparent",
+                      }}
+                    />
+                  </button>
                   {selectedUser === user.id && (
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedUser(null);
-                      }}
-                      className="absolute -top-1 -right-1 w-5 h-5 bg-[#FE2C55] rounded-full flex items-center justify-center"
+                      onClick={() => setSelectedUser(null)}
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-[#FE2C55] rounded-full flex items-center justify-center z-10"
                     >
                       <X className="w-3 h-3 text-white" />
                     </button>
@@ -129,7 +130,7 @@ export default function ShareModal({ isOpen, onClose, videoId }: ShareModalProps
                 <span className="text-white text-xs text-center line-clamp-1">
                   {user.username}
                 </span>
-              </button>
+              </div>
             ))}
           </div>
 
