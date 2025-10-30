@@ -10,15 +10,16 @@ const mockVideos = [
     url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     thumbnail_url: "https://via.placeholder.com/400x600?text=Video+1",
     user: {
-      id: "1",
+      id: "user1",
       username: "user1",
-      profile_image: "https://via.placeholder.com/48",
+      profile_image: "https://via.placeholder.com/40",
     },
     caption: "Amazing video! #lokiz #glitch #ai",
-    view_count: 125000,
+    view_count: 123000,
     like_count: 12300,
     comment_count: 456,
     glitch_count: 89,
+    share_count: 234,
     is_liked: false,
   },
   {
@@ -26,15 +27,16 @@ const mockVideos = [
     url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     thumbnail_url: "https://via.placeholder.com/400x600?text=Video+2",
     user: {
-      id: "2",
+      id: "user2",
       username: "user2",
-      profile_image: "https://via.placeholder.com/48",
+      profile_image: "https://via.placeholder.com/40",
     },
-    caption: "Check this out! 🔥",
-    view_count: 89000,
-    like_count: 8900,
-    comment_count: 234,
-    glitch_count: 45,
+    caption: "Check this out! #trending",
+    view_count: 456000,
+    like_count: 45600,
+    comment_count: 789,
+    glitch_count: 123,
+    share_count: 567,
     is_liked: true,
   },
   {
@@ -42,15 +44,16 @@ const mockVideos = [
     url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     thumbnail_url: "https://via.placeholder.com/400x600?text=Video+3",
     user: {
-      id: "3",
+      id: "user3",
       username: "user3",
-      profile_image: "https://via.placeholder.com/48",
+      profile_image: "https://via.placeholder.com/40",
     },
-    caption: "This is incredible! #trending",
-    view_count: 234000,
-    like_count: 23400,
-    comment_count: 789,
-    glitch_count: 123,
+    caption: "Epic moment! #viral",
+    view_count: 789000,
+    like_count: 78900,
+    comment_count: 1234,
+    glitch_count: 456,
+    share_count: 890,
     is_liked: false,
   },
 ];
@@ -79,10 +82,10 @@ export default function Feed() {
         
         // Snap to nearest video
         const scrollTop = container.scrollTop;
-        const videoHeight = window.innerHeight;
+        const videoHeight = container.clientHeight;
         const newIndex = Math.round(scrollTop / videoHeight);
         
-        if (newIndex !== currentIndex) {
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < videos.length) {
           setCurrentIndex(newIndex);
           container.scrollTo({
             top: newIndex * videoHeight,
@@ -93,15 +96,16 @@ export default function Feed() {
     };
 
     container.addEventListener("scroll", handleScroll);
+
     return () => {
       container.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollTimeout);
     };
-  }, [currentIndex]);
+  }, [currentIndex, videos.length]);
 
   const handleLike = (videoId: string) => {
     console.log("Like video:", videoId);
-    // TODO: API call
+    // TODO: Call API
   };
 
   const handleComment = (videoId: string) => {
@@ -122,29 +126,30 @@ export default function Feed() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
-      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-    >
-      <style>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-      
-      {videos.map((video, index) => (
-        <div key={video.id} className="h-screen snap-start">
-          <VideoPlayer
-            video={video}
-            isActive={index === currentIndex && !isScrolling}
-            onLike={() => handleLike(video.id)}
-            onComment={() => handleComment(video.id)}
-            onGlitch={() => handleGlitch(video.id)}
-            onShare={() => handleShare(video.id)}
-          />
-        </div>
-      ))}
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div
+        ref={containerRef}
+        className="relative w-full max-w-[500px] h-screen overflow-y-scroll snap-y snap-mandatory"
+      >
+        <style>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        
+        {videos.map((video, index) => (
+          <div key={video.id} className="h-screen snap-start">
+            <VideoPlayer
+              video={video}
+              isActive={index === currentIndex && !isScrolling}
+              onLike={() => handleLike(video.id)}
+              onComment={() => handleComment(video.id)}
+              onGlitch={() => handleGlitch(video.id)}
+              onShare={() => handleShare(video.id)}
+            />
+          </div>
+        ))}
+      </div>
 
       {/* Modals */}
       <GlitchModal
@@ -161,3 +166,4 @@ export default function Feed() {
     </div>
   );
 }
+
