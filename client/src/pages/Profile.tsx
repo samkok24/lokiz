@@ -20,12 +20,14 @@ const mockVideos = Array.from({ length: 12 }, (_, i) => ({
   id: `${i + 1}`,
   thumbnail: `https://via.placeholder.com/300x400?text=Video+${i + 1}`,
   views: Math.floor(Math.random() * 50000) + 1000,
+  recentlyWatched: i === 1, // 두 번째 비디오에 "방금 시청함" 표시
 }));
 
 export default function Profile() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState("videos");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<"latest" | "popular" | "oldest">("latest");
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) {
@@ -100,26 +102,62 @@ export default function Profile() {
       {/* Tabs */}
       <div className="container mx-auto px-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full justify-start border-b border-border rounded-none h-auto p-0 bg-transparent">
-            <TabsTrigger
-              value="videos"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
-            >
-              동영상
-            </TabsTrigger>
-            <TabsTrigger
-              value="reposts"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
-            >
-              리포스트
-            </TabsTrigger>
-            <TabsTrigger
-              value="likes"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
-            >
-              좋아요
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between border-b border-border">
+            <TabsList className="justify-start rounded-none h-auto p-0 bg-transparent">
+              <TabsTrigger
+                value="videos"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+              >
+                동영상
+              </TabsTrigger>
+              <TabsTrigger
+                value="reposts"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+              >
+                리포스트
+              </TabsTrigger>
+              <TabsTrigger
+                value="likes"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+              >
+                좋아요
+              </TabsTrigger>
+            </TabsList>
+            
+            {/* Filter buttons */}
+            <div className="flex items-center gap-2 pb-4">
+              <button
+                onClick={() => setSortBy("latest")}
+                className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                  sortBy === "latest"
+                    ? "bg-[#2a2a2a] text-white"
+                    : "bg-transparent text-gray-400 hover:text-white"
+                }`}
+              >
+                최신
+              </button>
+              <button
+                onClick={() => setSortBy("popular")}
+                className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                  sortBy === "popular"
+                    ? "bg-[#2a2a2a] text-white"
+                    : "bg-transparent text-gray-400 hover:text-white"
+                }`}
+              >
+                인기
+              </button>
+              <button
+                onClick={() => setSortBy("oldest")}
+                className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                  sortBy === "oldest"
+                    ? "bg-[#2a2a2a] text-white"
+                    : "bg-transparent text-gray-400 hover:text-white"
+                }`}
+              >
+                오래된 순
+              </button>
+            </div>
+          </div>
 
           <TabsContent value="videos" className="mt-0">
             <VideoGrid videos={mockVideos} onVideoClick={(videoId) => setSelectedVideo(videoId)} />
@@ -169,6 +207,7 @@ interface VideoGridProps {
     id: string;
     thumbnail: string;
     views: number;
+    recentlyWatched?: boolean;
   }>;
   onVideoClick: (videoId: string) => void;
 }
@@ -185,7 +224,7 @@ function VideoGrid({ videos, onVideoClick }: VideoGridProps) {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-1 py-4">
+    <div className="grid grid-cols-6 gap-1 py-4">
       {videos.map((video) => (
         <div
           key={video.id}
@@ -197,6 +236,16 @@ function VideoGrid({ videos, onVideoClick }: VideoGridProps) {
             alt={`Video ${video.id}`}
             className="w-full h-full object-cover"
           />
+          
+          {/* Recently Watched Overlay */}
+          {video.recentlyWatched && (
+            <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+              <div className="text-white text-center">
+                <Play className="w-8 h-8 mx-auto mb-2 fill-white" />
+                <span className="text-sm font-semibold">방금 시청함</span>
+              </div>
+            </div>
+          )}
           
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
