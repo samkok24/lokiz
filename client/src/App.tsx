@@ -9,6 +9,7 @@ import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Explore from "./pages/Explore";
 
 function Router() {
   return (
@@ -21,6 +22,12 @@ function Router() {
       <Route path="/">
         <MainLayout>
           <Feed />
+        </MainLayout>
+      </Route>
+      
+      <Route path="/explore">
+        <MainLayout>
+          <Explore />
         </MainLayout>
       </Route>
       
