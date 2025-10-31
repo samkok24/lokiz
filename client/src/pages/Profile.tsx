@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Share2, MoreHorizontal, Play } from "lucide-react";
+import { Share2, MoreHorizontal, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VideoDetailModal from "@/components/VideoDetailModal";
+import { useLocation } from "wouter";
 
 // Mock data
 const mockUser = {
@@ -28,6 +29,7 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("videos");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"latest" | "popular" | "oldest">("latest");
+  const [, setLocation] = useLocation();
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) {
@@ -40,7 +42,15 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Close button */}
+      <button
+        onClick={() => setLocation("/")}
+        className="fixed top-6 right-6 z-10 p-2 hover:bg-white/10 rounded-full transition-colors"
+      >
+        <X className="w-6 h-6" />
+      </button>
+
       {/* Profile Header */}
       <div className="border-b border-border">
         <div className="container mx-auto px-6 py-8">

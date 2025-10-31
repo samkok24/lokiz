@@ -99,37 +99,55 @@ export default function VideoPlayer({
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black">
-      {/* Video */}
-      <video
-        ref={videoRef}
-        src={video.url}
-        poster={video.thumbnail_url}
-        className="w-full h-full object-contain cursor-pointer"
-        loop
-        playsInline
-        muted={isMuted}
-        onClick={togglePlay}
-      />
+      {/* Center: Video Container */}
+      <div className="relative" style={{ width: "56.25%", maxWidth: "600px" }}>
+        <div className="relative bg-black rounded-lg overflow-hidden" style={{ aspectRatio: "9/16" }}>
+          {/* Video */}
+          <video
+            ref={videoRef}
+            src={video.url}
+            poster={video.thumbnail_url}
+            className="w-full h-full object-contain cursor-pointer"
+            loop
+            playsInline
+            muted={isMuted}
+            onClick={togglePlay}
+          />
 
-      {/* Play Icon Overlay */}
-      {!isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-20 h-20 rounded-full bg-black/50 flex items-center justify-center">
-            <Play className="w-10 h-10 text-white fill-white ml-1" />
+          {/* Play Icon Overlay */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-20 h-20 rounded-full bg-black/50 flex items-center justify-center">
+                <Play className="w-10 h-10 text-white fill-white ml-1" />
+              </div>
+            </div>
+          )}
+
+          {/* Progress Bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+            <div
+              className="h-full bg-primary transition-all duration-100"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Bottom Info (Overlay) */}
+          <div className="absolute left-4 bottom-4 right-4 text-white">
+            <div className="mb-2">
+              <span
+                onClick={() => setLocation(`/profile/${video.user.id}`)}
+                className="font-semibold cursor-pointer hover:underline"
+              >
+                {video.user.username}
+              </span>
+            </div>
+            <p className="text-sm line-clamp-2">{video.caption}</p>
           </div>
         </div>
-      )}
-
-      {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
-        <div
-          className="h-full bg-primary transition-all duration-100"
-          style={{ width: `${progress}%` }}
-        />
       </div>
 
-      {/* Right Side Actions */}
-      <div className="absolute right-4 bottom-24 flex flex-col items-center gap-6">
+      {/* Right Side Actions (Outside Video) */}
+      <div className="absolute right-8 bottom-24 flex flex-col items-center gap-6">
         {/* Profile */}
         <div className="relative">
           <img
@@ -180,22 +198,6 @@ export default function VideoPlayer({
           <Share2 className="w-8 h-8" />
           <span className="text-xs font-semibold">공유</span>
         </button>
-      </div>
-
-      {/* Bottom Info */}
-      <div className="absolute left-4 bottom-24 right-24 text-white">
-        <div className="mb-2">
-          <span
-            onClick={() => setLocation(`/profile/${video.user.id}`)}
-            className="font-semibold cursor-pointer hover:underline"
-          >
-            @{video.user.username}
-          </span>
-        </div>
-        <p className="text-sm mb-2 line-clamp-2">{video.caption}</p>
-        <div className="flex items-center gap-2 text-xs text-white/80">
-          <span>{formatCount(video.view_count)} views</span>
-        </div>
       </div>
 
       {/* Mute Button */}
