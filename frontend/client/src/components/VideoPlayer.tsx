@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Heart, MessageCircle, Zap, Share2, Play, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { useAuthStore } from "@/lib/store/authStore";
+import LoginModal from "@/components/LoginModal";
 import type { Video } from "@shared/types";
 
 interface VideoPlayerProps {
@@ -26,6 +28,8 @@ export default function VideoPlayer({
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [, setLocation] = useLocation();
+  const { isAuthenticated } = useAuthStore();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   // Auto play/pause based on isActive
   useEffect(() => {
@@ -142,14 +146,29 @@ export default function VideoPlayer({
             onClick={() => setLocation(`/profile/${video.user.id}`)}
             className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white cursor-pointer"
           />
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary flex items-center justify-center cursor-pointer">
+          <div 
+            onClick={() => {
+              if (!isAuthenticated) {
+                setLoginModalOpen(true);
+              } else {
+                // TODO: 팔로우 기능 구현
+              }
+            }}
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary flex items-center justify-center cursor-pointer"
+          >
             <span className="text-black text-lg font-bold">+</span>
           </div>
         </div>
 
         {/* Like */}
         <button
-          onClick={onLike}
+          onClick={() => {
+            if (!isAuthenticated) {
+              setLoginModalOpen(true);
+            } else {
+              onLike();
+            }
+          }}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <Heart
@@ -160,7 +179,13 @@ export default function VideoPlayer({
 
         {/* Comment */}
         <button
-          onClick={onComment}
+          onClick={() => {
+            if (!isAuthenticated) {
+              setLoginModalOpen(true);
+            } else {
+              onComment();
+            }
+          }}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <MessageCircle className="w-7 h-7 md:w-8 md:h-8" />
@@ -169,7 +194,13 @@ export default function VideoPlayer({
 
         {/* Glitch */}
         <button
-          onClick={onGlitch}
+          onClick={() => {
+            if (!isAuthenticated) {
+              setLoginModalOpen(true);
+            } else {
+              onGlitch();
+            }
+          }}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <Zap className="w-7 h-7 md:w-8 md:h-8" />
@@ -178,7 +209,13 @@ export default function VideoPlayer({
 
         {/* Share */}
         <button
-          onClick={onShare}
+          onClick={() => {
+            if (!isAuthenticated) {
+              setLoginModalOpen(true);
+            } else {
+              onShare();
+            }
+          }}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <Share2 className="w-7 h-7 md:w-8 md:h-8" />
@@ -193,6 +230,12 @@ export default function VideoPlayer({
       >
         {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
       </button>
+
+      {/* Login Modal */}
+      <LoginModal 
+        isOpen={loginModalOpen} 
+        onClose={() => setLoginModalOpen(false)}
+      />
     </div>
   );
 }

@@ -11,10 +11,10 @@ export default function Sidebar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const navItems = [
-    { icon: Home, label: "추천", path: "/" },
-    { icon: Compass, label: "탐색", path: "/explore" },
-    { icon: Users, label: "팔로잉", path: "/following" },
-    { icon: MessageCircle, label: "메시지", path: "/messages" },
+    { icon: Home, label: "추천", path: "/", requireAuth: false },
+    { icon: Compass, label: "탐색", path: "/explore", requireAuth: false },
+    { icon: Users, label: "팔로잉", path: "/following", requireAuth: true },
+    { icon: MessageCircle, label: "메시지", path: "/messages", requireAuth: true },
   ];
 
   return (
@@ -32,10 +32,18 @@ export default function Sidebar() {
           const Icon = item.icon;
           const isActive = location === item.path;
           
+          const handleClick = (e: React.MouseEvent) => {
+            if (item.requireAuth && !isAuthenticated) {
+              e.preventDefault();
+              setLoginModalOpen(true);
+            }
+          };
+
           return (
             <Link 
               key={item.path} 
               href={item.path}
+              onClick={handleClick}
               className={`
                 flex items-center space-x-4 px-4 py-3 rounded-lg mb-1
                 transition-colors duration-200
