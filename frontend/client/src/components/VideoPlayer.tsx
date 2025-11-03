@@ -179,13 +179,7 @@ export default function VideoPlayer({
 
         {/* Comment */}
         <button
-          onClick={() => {
-            if (!isAuthenticated) {
-              setLoginModalOpen(true);
-            } else {
-              onComment();
-            }
-          }}
+          onClick={onComment}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <MessageCircle className="w-7 h-7 md:w-8 md:h-8" />

@@ -1,5 +1,7 @@
 import { X, Heart, AtSign, Smile } from "lucide-react";
 import { useState } from "react";
+import { useAuthStore } from "@/lib/store/authStore";
+import LoginModal from "@/components/LoginModal";
 
 interface Comment {
   id: string;
@@ -23,6 +25,8 @@ interface CommentPanelProps {
 }
 
 export default function CommentPanel({ isOpen, onClose, videoId, commentCount }: CommentPanelProps) {
+  const { isAuthenticated } = useAuthStore();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [comments] = useState<Comment[]>([
     {
       id: "1",
@@ -79,6 +83,10 @@ export default function CommentPanel({ isOpen, onClose, videoId, commentCount }:
   const [commentText, setCommentText] = useState("");
 
   const handleSubmit = () => {
+    if (!isAuthenticated) {
+      setLoginModalOpen(true);
+      return;
+    }
     console.log("Submit comment:", commentText);
     // TODO: Call API
     setCommentText("");
@@ -208,6 +216,12 @@ export default function CommentPanel({ isOpen, onClose, videoId, commentCount }:
           </div>
         </div>
       </div>
+
+      {/* Login Modal */}
+      <LoginModal 
+        isOpen={loginModalOpen} 
+        onClose={() => setLoginModalOpen(false)}
+      />
     </>
   );
 }
