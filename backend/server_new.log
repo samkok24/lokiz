@@ -1,0 +1,43 @@
+INFO:     Will watch for changes in these directories: ['/home/ubuntu/lokiz-backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [62767] using WatchFiles
+Traceback (most recent call last):
+  File "/usr/local/bin/uvicorn", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/click/core.py", line 1462, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/click/core.py", line 1383, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/click/core.py", line 1246, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/click/core.py", line 814, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/uvicorn/main.py", line 423, in main
+    run(
+  File "/usr/local/lib/python3.11/dist-packages/uvicorn/main.py", line 588, in run
+    ChangeReload(config, target=server.run, sockets=[sock]).run()
+  File "/usr/local/lib/python3.11/dist-packages/uvicorn/supervisors/basereload.py", line 53, in run
+    for changes in self:
+  File "/usr/local/lib/python3.11/dist-packages/uvicorn/supervisors/basereload.py", line 72, in __next__
+    return self.should_restart()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/uvicorn/supervisors/watchfilesreload.py", line 81, in should_restart
+    changes = next(self.watcher)
+              ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/watchfiles/main.py", line 126, in watch
+    with RustNotify(
+         ^^^^^^^^^^^
+_rust_notify.WatchfilesRustInternalError: Error creating recommended watcher: Too many open files (os error 24)
+INFO:     Started server process [62769]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:36580 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37818 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36700 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55416 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56298 - "GET /openapi.json HTTP/1.1" 200 OK
