@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import MainLayout from "./components/MainLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,6 +14,7 @@ import Explore from "./pages/Explore";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
+import Search from "./pages/Search";
 
 function Router() {
   return (
@@ -34,6 +36,12 @@ function Router() {
         </MainLayout>
       </Route>
       
+      <Route path="/search">
+        <MainLayout>
+          <Search />
+        </MainLayout>
+      </Route>
+      
       <Route path="/profile/:id">
         <MainLayout>
           <Profile />
@@ -41,21 +49,27 @@ function Router() {
       </Route>
       
       <Route path="/messages">
-        <MainLayout>
-          <Messages />
-        </MainLayout>
+        <ProtectedRoute>
+          <MainLayout>
+            <Messages />
+          </MainLayout>
+        </ProtectedRoute>
       </Route>
       
       <Route path="/notifications">
-        <MainLayout>
-          <Notifications />
-        </MainLayout>
+        <ProtectedRoute>
+          <MainLayout>
+            <Notifications />
+          </MainLayout>
+        </ProtectedRoute>
       </Route>
       
       <Route path="/settings">
-        <MainLayout>
-          <Settings />
-        </MainLayout>
+        <ProtectedRoute>
+          <MainLayout>
+            <Settings />
+          </MainLayout>
+        </ProtectedRoute>
       </Route>
       
       <Route path="/404" component={NotFound} />

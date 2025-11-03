@@ -51,7 +51,7 @@ export default function Register() {
       <div className="w-full max-w-md p-8">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">{APP_TITLE}</h1>
+          <h1 className="text-4xl font-bold text-[#D0FF00] mb-2">lokiz</h1>
           <p className="text-muted-foreground">계정을 만들어 시작하세요</p>
         </div>
 

@@ -38,7 +38,7 @@ export default function Login() {
       <div className="w-full max-w-md p-8">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">Lokiz</h1>
+          <h1 className="text-4xl font-bold text-[#D0FF00] mb-2">lokiz</h1>
           <p className="text-muted-foreground">로그인하여 시작하세요</p>
         </div>
 

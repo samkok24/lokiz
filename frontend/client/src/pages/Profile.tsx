@@ -42,24 +42,24 @@ export default function Profile() {
 
       {/* Profile Header */}
       <div className="border-b border-border">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex items-start gap-8">
+        <div className="container mx-auto px-4 md:px-6 py-4 md:py-8">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8">
             {/* Profile Image */}
             <div className="flex-shrink-0">
               <img
                 src={mockUser.avatar}
                 alt={mockUser.nickname}
-                className="w-32 h-32 rounded-full object-cover"
+                className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover"
               />
             </div>
 
             {/* Profile Info */}
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-1">{mockUser.nickname}</h1>
+            <div className="flex-1 text-center md:text-left w-full">
+              <h1 className="text-2xl md:text-3xl font-bold mb-1">{mockUser.nickname}</h1>
               <p className="text-muted-foreground mb-4">@{mockUser.username}</p>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-6">
                 <Button
                   variant={isFollowing ? "outline" : "default"}
                   onClick={() => setIsFollowing(!isFollowing)}
@@ -76,7 +76,7 @@ export default function Profile() {
               </div>
 
               {/* Stats */}
-              <div className="flex items-center gap-6 mb-4">
+              <div className="flex items-center justify-center md:justify-start gap-4 md:gap-6 mb-4 text-sm md:text-base">
                 <button
                   onClick={() => {
                     setFollowModalTab("following");
@@ -111,25 +111,25 @@ export default function Profile() {
       </div>
 
       {/* Tabs */}
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-2 md:px-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex items-center justify-between border-b border-border">
             <TabsList className="justify-start rounded-none h-auto p-0 bg-transparent">
               <TabsTrigger
                 value="videos"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 md:px-6 py-3 md:py-4 text-sm md:text-base"
               >
                 동영상
               </TabsTrigger>
               <TabsTrigger
                 value="reposts"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 md:px-6 py-3 md:py-4 text-sm md:text-base"
               >
                 리포스트
               </TabsTrigger>
               <TabsTrigger
                 value="likes"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 md:px-6 py-3 md:py-4 text-sm md:text-base"
               >
                 좋아요
               </TabsTrigger>

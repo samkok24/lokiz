@@ -43,9 +43,9 @@ export default function Messages() {
   return (
     <div className="flex h-screen bg-background">
       {/* Left Panel - Conversations List */}
-      <div className="w-[300px] border-r border-border bg-[#121212]">
-        <div className="p-4 border-b border-border">
-          <h1 className="text-xl font-bold">메시지</h1>
+      <div className={`${selectedConversation ? 'hidden md:block' : 'block'} w-full md:w-[300px] border-r border-border bg-[#121212]`}>
+        <div className="p-3 md:p-4 border-b border-border">
+          <h1 className="text-lg md:text-xl font-bold">메시지</h1>
         </div>
 
         <div className="overflow-y-auto">
@@ -53,14 +53,14 @@ export default function Messages() {
             <div
               key={conversation.id}
               onClick={() => setSelectedConversation(conversation)}
-              className={`flex items-center gap-3 p-4 cursor-pointer hover:bg-[#1a1a1a] transition-colors $\{
+              className={`flex items-center gap-3 p-3 md:p-4 cursor-pointer hover:bg-[#1a1a1a] transition-colors ${
                 selectedConversation?.id === conversation.id ? "bg-[#1a1a1a]" : ""
               }`}
             >
               <img
                 src={conversation.user.avatar}
                 alt={conversation.user.nickname}
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full"
               />
               <div className="flex-1 min-w-0">
                 <div className="font-semibold truncate">
@@ -74,11 +74,20 @@ export default function Messages() {
       </div>
 
       {/* Right Panel - Chat Screen */}
-      <div className="flex-1 flex flex-col">
+      <div className={`${selectedConversation ? 'flex' : 'hidden md:flex'} flex-1 flex-col`}>
         {selectedConversation ? (
           <>
             {/* Chat Header */}
-            <div className="flex items-center gap-3 p-4 border-b border-border bg-[#121212]">
+            <div className="flex items-center gap-3 p-3 md:p-4 border-b border-border bg-[#121212]">
+              {/* Back Button (Mobile) */}
+              <button
+                onClick={() => setSelectedConversation(null)}
+                className="md:hidden p-2 hover:bg-[#1a1a1a] rounded-full"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
               <img
                 src={selectedConversation.user.avatar}
                 alt={selectedConversation.user.nickname}
@@ -91,7 +100,7 @@ export default function Messages() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto p-3 md:p-4">
               {messages.length === 0 && (
                 <div className="flex items-center justify-center h-full text-gray-500">
                   메시지를 보내보세요
@@ -108,7 +117,7 @@ export default function Messages() {
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-border bg-[#121212] relative">
+            <div className="p-3 md:p-4 border-t border-border bg-[#121212] relative">
               <div className="flex items-center gap-2">
                 <Input
                   value={message}

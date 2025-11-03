@@ -119,9 +119,9 @@ export default function Explore() {
   return (
     <div className="min-h-screen pb-8">
       {/* Category Tabs */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
-        <div className="container mx-auto px-6">
-          <div className="relative flex items-center py-4">
+      <div className="sticky top-16 z-10 bg-background border-b border-border">
+        <div className="container mx-auto px-2 md:px-6">
+          <div className="relative flex items-center py-2 md:py-4">
             {/* Left Arrow */}
             {showLeftArrow && (
               <button
@@ -142,7 +142,7 @@ export default function Explore() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-colors ${
+                  className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full whitespace-nowrap text-xs md:text-sm font-medium transition-colors ${
                     activeCategory === category
                       ? "bg-white text-black"
                       : "bg-[#2a2a2a] text-white hover:bg-[#3a3a3a]"
@@ -167,8 +167,8 @@ export default function Explore() {
       </div>
 
       {/* Video Grid */}
-      <div className="container mx-auto px-6 pt-6">
-        <div className="grid grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="container mx-auto px-2 md:px-6 pt-4 md:pt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1">
           {videos.map((video) => (
             <div
               key={video.id}
@@ -176,7 +176,7 @@ export default function Explore() {
               className="group cursor-pointer"
             >
               {/* Thumbnail */}
-              <div className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden mb-2">
+              <div className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden mb-1 md:mb-2">
                 <img
                   src={video.thumbnailUrl}
                   alt={`Video ${video.id}`}
@@ -187,20 +187,20 @@ export default function Explore() {
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
 
                 {/* Like Count */}
-                <div className="absolute bottom-2 left-2 flex items-center gap-1 text-white text-sm font-semibold">
-                  <Heart className="w-4 h-4 fill-white" />
+                <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2 flex items-center gap-0.5 md:gap-1 text-white text-xs md:text-sm font-semibold">
+                  <Heart className="w-3 h-3 md:w-4 md:h-4 fill-white" />
                   <span>{formatCount(video.likes)}</span>
                 </div>
               </div>
 
               {/* User Info */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 md:gap-2">
                 <img
                   src={video.user.avatar}
                   alt={video.user.username}
-                  className="w-6 h-6 rounded-full"
+                  className="w-5 h-5 md:w-6 md:h-6 rounded-full"
                 />
-                <span className="text-sm text-gray-400 truncate">
+                <span className="text-xs md:text-sm text-gray-400 truncate">
                   {video.user.username}
                 </span>
               </div>

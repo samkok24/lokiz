@@ -86,7 +86,7 @@ export default function VideoPlayer({
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black">
       {/* Center: Video Container */}
-      <div className="relative" style={{ width: "56.25%", maxWidth: "600px" }}>
+      <div className="relative w-full md:w-[56.25%] max-w-full md:max-w-[600px]">
         <div className="relative bg-black rounded-lg overflow-hidden" style={{ aspectRatio: "9/16" }}>
           {/* Video */}
           <video
@@ -133,16 +133,16 @@ export default function VideoPlayer({
       </div>
 
       {/* Right Side Actions (Outside Video) */}
-      <div className="absolute right-8 bottom-24 flex flex-col items-center gap-6">
+      <div className="absolute right-4 md:right-8 bottom-28 md:bottom-24 flex flex-col items-center gap-4 md:gap-6">
         {/* Profile */}
         <div className="relative">
           <img
             src={video.user.avatar || "https://via.placeholder.com/48"}
             alt={video.user.username}
             onClick={() => setLocation(`/profile/${video.user.id}`)}
-            className="w-12 h-12 rounded-full border-2 border-white cursor-pointer"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white cursor-pointer"
           />
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary flex items-center justify-center cursor-pointer">
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary flex items-center justify-center cursor-pointer">
             <span className="text-black text-lg font-bold">+</span>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function VideoPlayer({
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
           <Heart
-            className={`w-8 h-8 ${video.isLiked ? "fill-primary text-primary" : ""}`}
+            className={`w-7 h-7 md:w-8 md:h-8 ${video.isLiked ? "fill-primary text-primary" : ""}`}
           />
           <span className="text-xs font-semibold">{formatCount(video.likes)}</span>
         </button>
@@ -163,7 +163,7 @@ export default function VideoPlayer({
           onClick={onComment}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
-          <MessageCircle className="w-8 h-8" />
+          <MessageCircle className="w-7 h-7 md:w-8 md:h-8" />
           <span className="text-xs font-semibold">{formatCount(video.comments)}</span>
         </button>
 
@@ -172,7 +172,7 @@ export default function VideoPlayer({
           onClick={onGlitch}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
-          <Zap className="w-8 h-8" />
+          <Zap className="w-7 h-7 md:w-8 md:h-8" />
           <span className="text-xs font-semibold">{formatCount(video.bookmarks || 0)}</span>
         </button>
 
@@ -181,7 +181,7 @@ export default function VideoPlayer({
           onClick={onShare}
           className="flex flex-col items-center gap-1 text-white hover:scale-110 transition-transform"
         >
-          <Share2 className="w-8 h-8" />
+          <Share2 className="w-7 h-7 md:w-8 md:h-8" />
           <span className="text-xs font-semibold">공유</span>
         </button>
       </div>
